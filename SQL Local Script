@@ -1,0 +1,73 @@
+//All the tables that will be utilzing 
+-- create
+CREATE TABLE user (
+   user_id INT AUTO_INCREMENT PRIMARY KEY,
+   email VARCHAR(100) UNIQUE, -- to be determined
+   username VARCHAR(20) UNIQUE, -- on website give user an error when they submit a name larger than 20
+   pass VARCHAR(100) -- on insert from webite to sql server use SHA1() command for safe storage
+);
+
+CREATE TABLE diff_1_score (
+   user_id INT,
+   time_score DOUBLE, 
+   mistakes_made INT
+);
+
+CREATE TABLE diff_3_score (
+   user_id INT,
+   time_score DOUBLE, 
+   mistakes_made INT
+);
+
+CREATE TABLE diff_3_score (
+   user_id INT,
+   time_score DOUBLE, 
+   mistakes_made INT
+);
+
+-- insert example
+INSERT INTO user (email, username, pass) 
+VALUES 
+  ('johndoe@gmail.com', 'johndoe', SHA1('password')),
+  ('jakedoe@gmail.com', 'jakeadoe', SHA1('password')),
+  ('janedoe@gmail.com', 'janedoe', SHA1('password'));
+
+INSERT INTO difficulty_1_score VALUES(1, 2.1, 1);
+INSERT INTO difficulty_1_score VALUES(2, 32.2, 2);
+INSERT INTO difficulty_1_score VALUES(3, 2.5, 3);
+INSERT INTO difficulty_1_score VALUES(3, 4.2, 2);
+INSERT INTO difficulty_1_score VALUES(2, 1.5, 1);
+
+-- fetch 
+SELECT * FROM user;
+select * from diff_1_score;
+
+SELECT
+   u.username,
+   MIN(d1.time_score) as lowest_time
+   FROM 
+   user as u
+   LEFT JOIN diff_1_score as d1 ON u.user_id = d1.user_id
+   GROUP BY u.username
+   order by lowest_time ASC;
+   GROUP BY u.username
+
+SELECT
+   u.username,
+   MIN(d2.time_score) as lowest_time
+   FROM 
+   user as u
+   LEFT JOIN diff_2_score as d1 ON u.user_id = d2.user_id
+   GROUP BY u.username
+   order by lowest_time ASC;
+   GROUP BY u.username
+
+SELECT
+   u.username,
+   MIN(d3.time_score) as lowest_time
+   FROM 
+   user as u
+   LEFT JOIN diff_3_score as d1 ON u.user_id = d3.user_id
+   GROUP BY u.username
+   order by lowest_time ASC;
+   GROUP BY u.username
