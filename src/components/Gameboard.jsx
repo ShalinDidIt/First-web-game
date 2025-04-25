@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
-import './Gameboard.css'; // Import the CSS file for the grid
+import '../styles/Gameboard.css';
 
 const Gameboard = ({ numCards = 20 }) => {
     // Ensure numCards is even for pairs
@@ -66,8 +66,15 @@ const Gameboard = ({ numCards = 20 }) => {
 
     const checkMatch = (flippedCards) => {
         if (flippedCards[0].value === flippedCards[1].value) {
+            const updatedCards = cards.map((card) =>
+                flippedCards.some((flipped) => flipped.id === card.id)
+                    ? { ...card, isFlipped: true }
+                    : card
+            );
+            setCards(updatedCards);
             setFlippedCards([]);
-            checkGameOver();
+            console.log('Match found!');
+            checkGameOver(updatedCards); // Pass the updated cards array
         } else {
             setMistakes((prevMistakes) => prevMistakes + 1); // Increment mistakes
             const updatedCards = cards.map((card) =>
@@ -80,11 +87,16 @@ const Gameboard = ({ numCards = 20 }) => {
         }
     };
 
-    const checkGameOver = () => {
-        if (cards.every((card) => card.isFlipped || card.isBlank)) {
+    const checkGameOver = (updatedCards) => {
+        console.log('Checking game over condition...');
+        console.log(updatedCards); // Log the updated cards array
+        if (updatedCards.every((card) => card.isFlipped || card.isBlank)) {
+            console.log('Win!');
             setIsGameOver(true);
             alert(`Game Over! Time: ${time}s, Mistakes: ${mistakes}`);
             // Here you can send the data to the leaderboard
+        } else {
+            console.log('Game not over yet.');
         }
     };
 
