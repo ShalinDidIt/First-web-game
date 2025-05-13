@@ -20,6 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+session_start(); // Start the session
+
 include '../db_connection.php'; // Include your database connection file
 
 $data = json_decode(file_get_contents('php://input'), true);
@@ -31,7 +33,27 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $username, $password);
 
 if ($stmt->execute()) {
-    echo json_encode(['success' => true, 'message' => 'Signup successful']);
+    // Fetch the newly created user's ID
+    $user_id = $stmt->insert_id;
+
+    // Set the session data for the new user
+    $_SESSION['user'] = [
+        'user_id' => $user_id,
+        'username' => $username,
+    ];
+
+    // Explicitly set the session ID in the response
+    setcookie('PHPSESSID', session_id(), [
+        'path' => '/',
+        'httponly' => true,
+        'samesite' => 'None', // Allow cross-origin requests
+        'secure' => false,    // Set to true if using HTTPS
+    ]);
+
+    error_log("Session ID in signup.php: " . session_id());
+    error_log("Session set in signup.php: " . print_r($_SESSION['user'], true));
+
+    echo json_encode(['success' => true, 'message' => 'Signup successful', 'username' => $username]);
 } else {
     echo json_encode(['success' => false, 'message' => 'Signup failed']);
 }

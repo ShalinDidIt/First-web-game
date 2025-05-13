@@ -5,6 +5,7 @@ import Login from '../components/Login';
 import Signup from '../components/Signup';
 import handleLogin from '../services/handleLogin';
 import handleSignup from '../services/handleSignup';
+import handleLogout from '../services/handleLogout';
 
 const HomeScreen = () => {
     const { user, setUser } = useContext(AuthContext);
@@ -21,20 +22,34 @@ const HomeScreen = () => {
 
     const signup = async (username, password) => {
         const result = await handleSignup(username, password);
+        console.log(result);
         if (result.success) {
-            alert('Signup successful! Please log in.');
+            // alert('Signup successful! Please log in.');
             setIsLogin(true);
         } else {
             alert(result.message);
         }
     };
 
+    const logout = async () => {
+        const result = await handleLogout();
+        console.log("HomeScreen: ", result);
+        if (result) {
+            setUser(null);
+        } else {
+            alert(result);
+        }
+    }
+
     return (
         <div>
             <h1>Welcome to the Memory Game</h1>
             <div>
                 {user ? (
-                    <h2>Hello, {user.username}!</h2>
+                    <>
+                        <h2>Hello, {user.username}!</h2>
+                        <button onClick={logout}>Log Out</button>
+                    </>
                 ) : (
                     <></>
                 )}

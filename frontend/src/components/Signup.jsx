@@ -4,9 +4,16 @@ const Signup = ({ onSignup }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSignup(username, password);
+        console.log("Attempting to sign up with: ", username, password);
+        const result = await onSignup(username, password);
+        console.log("Signup: ", result)
+        if (result.success) {
+            alert(`Signup successful! Welcome, ${result.username}.`);
+        } else {
+            alert(result.message);
+        }
     };
 
     return (
