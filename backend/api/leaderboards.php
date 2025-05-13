@@ -3,24 +3,17 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 header('Content-Type: application/json');
 
-// Dynamically set the allowed origin
-if (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['HTTP_ORIGIN'] === 'http://localhost:5173') {
-    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
-} else {
-    header("Access-Control-Allow-Origin: http://localhost:5173"); // Default to your frontend's origin
-}
+header("Access-Control-Allow-Origin: http://localhost:5173");
+header('Access-Control-Allow-Methods: GET, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Credentials: true'); // cookie credentials
 
-header('Access-Control-Allow-Methods: GET, OPTIONS'); // Allow specific HTTP methods
-header('Access-Control-Allow-Headers: Content-Type'); // Allow specific headers
-header('Access-Control-Allow-Credentials: true'); // Allow credentials (cookies)
-
-// Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
-include '../db_connection.php'; // Include your database connection file
+include '../db_connection.php';
 
 $difficulty = isset($_GET['difficulty']) ? intval($_GET['difficulty']) : 1;
 $table = "diff_{$difficulty}_score";
