@@ -20,25 +20,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-include '../db_connection.php'; // Include your database connection file
+session_start(); // Start the session
 
-$difficulty = isset($_GET['difficulty']) ? intval($_GET['difficulty']) : 1;
-$table = "diff_{$difficulty}_score";
-
-$sql = "SELECT u.username, d.time_score, d.mistakes_made
-        FROM user u
-        JOIN $table d ON u.user_id = d.user_id
-        ORDER BY d.time_score ASC
-        LIMIT 10";
-$result = $conn->query($sql);
-
-$data = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
-    }
+if (isset($_SESSION['user'])) {
+    echo json_encode([
+        'success' => true,
+        'user' => $_SESSION['user']
+    ]);
+} else {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Not authenticated'
+    ]);
 }
-
-echo json_encode($data);
-$conn->close();
 ?>

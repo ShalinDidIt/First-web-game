@@ -1,36 +1,20 @@
 const handleLogin = async (username, password) => {
     try {
-        const response = await fetch('http://localhost/login.php', {
+        const response = await fetch('http://localhost/memory-game-backend/api/login.php', {
             method: 'POST',
+            credentials: 'include', // Include cookies for session-based authentication
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password }),
         });
-        const data = await response.json();
-        if (data.success) {
-            alert('Login successful');
-        } else {
-            alert(data.message);
+        if (!response.ok) {
+            console.log("A")
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        const data = await response.json();
+        return data;
     } catch (error) {
         console.error('Error logging in:', error);
-    }
-};
-
-const handleSignup = async (username, password) => {
-    try {
-        const response = await fetch('http://localhost/signup.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password }),
-        });
-        const data = await response.json();
-        if (data.success) {
-            alert('Signup successful');
-        } else {
-            alert(data.message);
-        }
-    } catch (error) {
-        console.error('Error signing up:', error);
+        return { success: false, message: 'Unable to connect to the server.' };
     }
 };
 

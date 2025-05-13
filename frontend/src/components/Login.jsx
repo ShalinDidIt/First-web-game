@@ -6,6 +6,7 @@ const Login = ({ onLogin }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("Attempting to log in with: ", username, password);
         onLogin(username, password);
     };
 
@@ -14,7 +15,7 @@ const Login = ({ onLogin }) => {
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Username:</label>
+                    <label>Username: </label>
                     <input
                         type="text"
                         value={username}
@@ -23,7 +24,7 @@ const Login = ({ onLogin }) => {
                     />
                 </div>
                 <div>
-                    <label>Password:</label>
+                    <label>Password: </label>
                     <input
                         type="password"
                         value={password}
@@ -31,6 +32,7 @@ const Login = ({ onLogin }) => {
                         required
                     />
                 </div>
+                <br/>
                 <button type="submit">Login</button>
             </form>
         </div>

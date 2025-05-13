@@ -1,44 +1,43 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from './Card';
+import saveScore from '../services/saveScore'; // Import the saveScore function
 import '../styles/Gameboard.css';
 
-const Gameboard = ({ numCards = 20 }) => {
-    // Ensure numCards is even for pairs
+const Gameboard = ({ numCards = 20, difficulty = 1, user }) => {
+    const navigate = useNavigate(); // Use navigate to redirect to the leaderboard
     const totalCards = Math.min(numCards, 100); // Limit to 100 cards
     const initialCards = Array.from({ length: totalCards / 2 }, (_, i) => ({
-        id: `card-${i + 1}`, // Assign unique IDs
-        value: String.fromCharCode(65 + (i % 26)), // Assign letters A-Z cyclically
+        id: `card-${i + 1}`,
+        value: String.fromCharCode(65 + (i % 26)),
         isFlipped: false,
-        isBlank: false, // Regular cards are not blank
+        isBlank: false,
     }));
 
-    // Duplicate cards to create pairs and assign unique IDs to duplicates
     const pairedCards = initialCards.flatMap((card) => [
         card,
-        { ...card, id: `${card.id}-pair` }, // Unique ID for the duplicate
+        { ...card, id: `${card.id}-pair` },
     ]);
 
-    // Add blank cards to fill the grid
     const blankCards = Array.from({ length: 100 - totalCards }, (_, i) => ({
-        id: `blank-${i + 1}`, // Unique IDs for blank cards
-        value: null, // Blank cards have no value
+        id: `blank-${i + 1}`,
+        value: null,
         isFlipped: false,
-        isBlank: true, // Mark as blank
+        isBlank: true,
     }));
 
-    // Combine and shuffle cards
     const [cards, setCards] = useState(shuffleArray([...pairedCards, ...blankCards]));
     const [flippedCards, setFlippedCards] = useState([]);
-    const [mistakes, setMistakes] = useState(0); // Mistake counter
-    const [time, setTime] = useState(0); // Timer in seconds
-    const [isGameOver, setIsGameOver] = useState(false); // Game over state
+    const [mistakes, setMistakes] = useState(0);
+    const [time, setTime] = useState(0);
+    const [isGameOver, setIsGameOver] = useState(false);
 
     useEffect(() => {
         let timer;
         if (!isGameOver) {
             timer = setInterval(() => setTime((prevTime) => prevTime + 1), 1000);
         }
-        return () => clearInterval(timer); // Cleanup timer on unmount or game over
+        return () => clearInterval(timer);
     }, [isGameOver]);
 
     function shuffleArray(array) {
@@ -47,8 +46,6 @@ const Gameboard = ({ numCards = 20 }) => {
 
     const handleCardClick = (id) => {
         const clickedCard = cards.find((card) => card.id === id);
-
-        // Ignore clicks on blank cards or already flipped cards
         if (clickedCard.isFlipped || clickedCard.isBlank || flippedCards.length === 2) return;
 
         const updatedCards = cards.map((card) =>
@@ -73,10 +70,9 @@ const Gameboard = ({ numCards = 20 }) => {
             );
             setCards(updatedCards);
             setFlippedCards([]);
-            console.log('Match found!');
-            checkGameOver(updatedCards); // Pass the updated cards array
+            checkGameOver(updatedCards);
         } else {
-            setMistakes((prevMistakes) => prevMistakes + 1); // Increment mistakes
+            setMistakes((prevMistakes) => prevMistakes + 1);
             const updatedCards = cards.map((card) =>
                 flippedCards.some((flipped) => flipped.id === card.id)
                     ? { ...card, isFlipped: false }
@@ -87,16 +83,18 @@ const Gameboard = ({ numCards = 20 }) => {
         }
     };
 
-    const checkGameOver = (updatedCards) => {
-        console.log('Checking game over condition...');
-        console.log(updatedCards); // Log the updated cards array
+    const checkGameOver = async (updatedCards) => {
         if (updatedCards.every((card) => card.isFlipped || card.isBlank)) {
-            console.log('Win!');
             setIsGameOver(true);
             alert(`Game Over! Time: ${time}s, Mistakes: ${mistakes}`);
-            // Here you can send the data to the leaderboard
-        } else {
-            console.log('Game not over yet.');
+            if (user) {
+                // Save the score if the user is logged in
+                await saveScore(time, mistakes, difficulty);
+                navigate('/leaderboards'); // Redirect to the leaderboard
+            } else {
+                // Prompt the user to log in or sign up
+                alert("Log in to save your score!");
+            }
         }
     };
 

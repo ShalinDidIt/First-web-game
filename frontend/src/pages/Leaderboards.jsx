@@ -7,26 +7,16 @@ const Leaderboards = () => {
     const [difficulty, setDifficulty] = useState(1); // Default difficulty level
 
     useEffect(() => {
-        // Simulate fetching data from the backend
-        // const fetchLeaderboardData = async () => {
-        //     try {
-        //         // Replace this with your backend API call
-        //         const response = await fetch(`/api/leaderboards?difficulty=${difficulty}`);
-        //         const data = await response.json();
-        //         setLeaderboardData(data);
-        //     } catch (error) {
-        //         console.error('Error fetching leaderboard data:', error);
-        //     }
-        // };
-        
         const fetchLeaderboardData = async () => {
-            // Simulated data for testing
-            const mockData = [
-                { username: 'johndoe', time_score: 12.5, mistakes_made: 1 },
-                { username: 'janedoe', time_score: 15.2, mistakes_made: 2 },
-                { username: 'jakedoe', time_score: 18.1, mistakes_made: 3 },
-            ];
-            setLeaderboardData(mockData);
+            try {
+                const response = await fetch(
+                    `http://localhost/memory-game-backend/api/leaderboards.php?difficulty=${difficulty}`
+                );
+                const data = await response.json();
+                setLeaderboardData(data);
+            } catch (error) {
+                console.error('Error fetching leaderboard data:', error);
+            }
         };
         fetchLeaderboardData();
     }, [difficulty]);
