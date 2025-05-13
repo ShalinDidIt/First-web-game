@@ -1,11 +1,11 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import Nav from './components/Nav';
-import HomeScreen from './pages/HomeScreen';
-import GameScreen from './pages/GameScreen';
-import Leaderboards from './pages/Leaderboards';
-import './styles/App.css';
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
+import Nav from './components/Nav'
+import HomeScreen from './pages/HomeScreen'
+import GameScreen from './pages/GameScreen'
+import Leaderboards from './pages/Leaderboards'
+import './styles/App.css'
 
 function App() {
     return (
@@ -21,7 +21,7 @@ function App() {
                 </div>
             </Router>
         </AuthProvider>
-    );
+    )
 }
 
-export default App;
+export default App

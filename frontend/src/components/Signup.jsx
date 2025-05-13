@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const Signup = ({ onSignup }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log("Attempting to sign up with: ", username, password);
-        const result = await onSignup(username, password);
+        e.preventDefault()
+        console.log("Attempting to sign up with: ", username, password)
+        const result = await onSignup(username, password)
         console.log("Signup: ", result)
         if (result.success) {
-            alert(`Signup successful! Welcome, ${result.username}.`);
+            alert(`Signup successful! Welcome, ${result.username}.`)
         } else {
-            alert(result.message);
+            alert(result.message)
         }
-    };
+    }
 
     return (
         <div>
@@ -41,7 +41,7 @@ const Signup = ({ onSignup }) => {
                 <button type="submit">Sign Up</button>
             </form>
         </div>
-    );
-};
+    )
+}
 
-export default Signup;
+export default Signup

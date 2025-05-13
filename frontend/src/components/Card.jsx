@@ -1,5 +1,5 @@
-import React from 'react';
-import '../styles/Card.css';
+import React from 'react'
+import '../styles/Card.css'
 
 const Card = ({ id, value, isFlipped, isBlank, onClick }) => {
     return (
@@ -14,7 +14,7 @@ const Card = ({ id, value, isFlipped, isBlank, onClick }) => {
                 <div className="back"></div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Card;
+export default Card

@@ -5,14 +5,14 @@ const handleSignup = async (username, password) => {
             credentials: 'include', // Include cookies for session-based authentication
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password }),
-        });
-        const data = await response.json();
+        })
+        const data = await response.json()
         console.log("handleSignup: ", data)
-        return data;
+        return data
     } catch (error) {
-        console.error('Error signing up:', error);
-        return { success: false, message: 'Unable to connect to the server.' };
+        console.error('Error signing up:', error)
+        return { success: false, message: 'Unable to connect to the server.' }
     }
-};
+}
 
-export default handleSignup;
+export default handleSignup

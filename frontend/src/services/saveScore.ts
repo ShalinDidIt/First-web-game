@@ -5,16 +5,16 @@ const saveScore = async (timeScore, mistakesMade, difficulty) => {
             credentials: 'include', // Include cookies for session-based authentication
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ time_score: timeScore, mistakes_made: mistakesMade, difficulty: difficulty }),
-        });
-        const data = await response.json();
+        })
+        const data = await response.json()
         if (data.success) {
-            console.log('Score saved successfully');
+            console.log('Score saved successfully')
         } else {
-            alert(data.message);
+            alert(data.message)
         }
     } catch (error) {
-        console.error('Error saving score:', error);
+        console.error('Error saving score:', error)
     }
-};
+}
 
-export default saveScore;
+export default saveScore

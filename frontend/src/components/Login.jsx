@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const Login = ({ onLogin }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Attempting to log in with: ", username, password);
-        onLogin(username, password);
-    };
+        e.preventDefault()
+        console.log("Attempting to log in with: ", username, password)
+        onLogin(username, password)
+    }
 
     return (
         <div>
@@ -36,7 +36,7 @@ const Login = ({ onLogin }) => {
                 <button type="submit">Login</button>
             </form>
         </div>
-    );
-};
+    )
+}
 
-export default Login;
+export default Login

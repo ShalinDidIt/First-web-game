@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/Leaderboards.css'; 
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import '../styles/Leaderboards.css' 
 
 const Leaderboards = () => {
-    const [leaderboardData, setLeaderboardData] = useState([]);
-    const [difficulty, setDifficulty] = useState(1); // Default difficulty level
+    const [leaderboardData, setLeaderboardData] = useState([])
+    const [difficulty, setDifficulty] = useState(1) 
 
     useEffect(() => {
         const fetchLeaderboardData = async () => {
             try {
                 const response = await fetch(
                     `http://localhost/memory-game-backend/api/leaderboards.php?difficulty=${difficulty}`
-                );
-                const data = await response.json();
-                setLeaderboardData(data);
+                )
+                const data = await response.json()
+                setLeaderboardData(data)
             } catch (error) {
-                console.error('Error fetching leaderboard data:', error);
+                console.error('Error fetching leaderboard data:', error)
             }
-        };
-        fetchLeaderboardData();
-    }, [difficulty]);
+        }
+        fetchLeaderboardData()
+    }, [difficulty])
 
     return (
         <div className="leaderboards">
@@ -57,7 +57,7 @@ const Leaderboards = () => {
             </table>
             <Link to="/">Back to Home</Link>
         </div>
-    );
-};
+    )
+}
 
-export default Leaderboards;
+export default Leaderboards
