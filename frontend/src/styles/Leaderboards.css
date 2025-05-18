@@ -36,5 +36,17 @@ table tr:nth-child(even) {
 }
 
 table tr:hover {
-    background-color: #ddd;
+    background-color: #003b9b7b;
+}
+
+.arrow {
+    cursor: pointer;
+    margin-left: 5px;
+    text-decoration: none;
+    color: gray;
+}
+
+.arrow.active {
+    color: black;
+    font-weight: bold;
 }

@@ -5,6 +5,7 @@ import Nav from './components/Nav'
 import HomeScreen from './pages/HomeScreen'
 import GameScreen from './pages/GameScreen'
 import Leaderboards from './pages/Leaderboards'
+import HowToPlay from './pages/HowToPlay'
 import './styles/App.css'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
                         <Route path="/" element={<HomeScreen />} />
                         <Route path="/game" element={<GameScreen />} />
                         <Route path="/leaderboards" element={<Leaderboards />} />
+                        <Route path="/how-to-play" element={<HowToPlay />} />
                     </Routes>
                 </div>
             </Router>

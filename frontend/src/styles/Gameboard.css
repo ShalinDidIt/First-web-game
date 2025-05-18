@@ -1,15 +1,15 @@
 .gameboard {
     display: grid;
-    grid-template-columns: repeat(10, 1fr); /* 10 columns */
-    gap: 10px; /* Space between cards */
+    grid-template-columns: repeat(10, 1fr);
+    gap: 10px;
     width: 100%;
-    max-width: 800px; /* Optional: Limit the grid's max width */
-    margin: 0 auto; /* Center the grid */
+    max-width: 800px; 
+    margin: 0 auto; 
 }
 
 .card {
-    aspect-ratio: 2 / 3; /* Maintain a 2:3 aspect ratio (e.g., 100px width, 150px height) */
-    width: 100%; /* Make the card fill the grid cell */
+    aspect-ratio: 2 / 3; 
+    width: 100%;
     cursor: pointer;
     perspective: 1000px;
 }
@@ -46,7 +46,7 @@
 }
 
 .back {
-    background-image: url('../assets/PokemonCardBack.jpg'); /* Path to your card back image */
+    background-image: url('../assets/PokemonCardBack.jpg'); 
     background-size: cover;
     background-position: center;
     transform: rotateY(180deg);
@@ -56,17 +56,20 @@
     background-color: transparent;
     background-image: none;
     border: none;
-    pointer-events: none; /* Disable interaction with blank cards */
+    pointer-events: none; 
 }
+
 .card.blank > div > div {
-    background-color: transparent; /* Make the card's background transparent */
-    border: none; /* Remove any borders */
+    background-color: transparent;
+    border: none;
 }
+
 .card.blank > div > .back {
-    background-image: none; /* Remove the back image for blank cards */
+    background-image: none;
 }
+
 .card.blank > .front {
-    background-color: transparent; /* Make the front transparent for blank cards */
+    background-color: transparent;
 }
 
 .game-info {

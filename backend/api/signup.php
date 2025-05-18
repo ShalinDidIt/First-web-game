@@ -18,16 +18,23 @@ session_start();
 include '../db_connection.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
-$username = $data['username'];
-$password = $data['password'];
 
-$sql = "INSERT INTO user (username, pass) VALUES (?, SHA1(?))";
+
+$email = isset($data['email']) ? $data['email'] : null;
+$username = isset($data['username']) ? $data['username'] : null;
+$password = isset($data['password']) ? $data['password'] : null;
+
+if (!$email || !$username || !$password) {
+    echo json_encode(['success' => false, 'message' => 'Missing required fields']);
+    exit();
+}
+
+$sql = "INSERT INTO user (email, username, pass) VALUES (?, ?, SHA1(?))";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ss", $username, $password);
+
+$stmt->bind_param("sss", $email, $username, $password);
 
 if ($stmt->execute()) {
-    // trying to get signup to automatically log in the user
-    // probably just use the login sql here...
     $user_id = $stmt->insert_id;
 
     $_SESSION['user'] = [
@@ -37,7 +44,7 @@ if ($stmt->execute()) {
     setcookie('PHPSESSID', session_id(), [
         'path' => '/',
         'httponly' => true,
-        'samesite' => 'None', 
+        'samesite' => 'None',
         'secure' => false,
     ]);
 

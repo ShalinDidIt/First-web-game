@@ -20,8 +20,8 @@ const HomeScreen = () => {
         }
     }
 
-    const signup = async (username, password) => {
-        const result = await handleSignup(username, password)
+    const signup = async (username, password, email) => {
+        const result = await handleSignup(username, password, email)
         console.log(result)
         if (result.success) {
             setIsLogin(true)
@@ -42,36 +42,26 @@ const HomeScreen = () => {
 
     return (
         <div>
-            <h1>Welcome to the Memory Game</h1>
             <div>
                 {user ? (
                     <>
                         <h2>Hello, {user.username}!</h2>
                         <button onClick={logout}>Log Out</button>
                     </>
-                ) : (
-                    <></>
-                )}
-                <nav>
-                    <Link to="/game">Start Game</Link>
-                    <br />
-                    <Link to="/leaderboards">View Leaderboards</Link>
-                </nav>
-            </div>
-
-            <div>
+                ) : (<></>)}
+                    <button>
+                        <Link to="/game">Start Game</Link>
+                    </button>
                 {user ? (
                     <></>
                 ) : (
                     <>
                         {isLogin ? (
-                            <Login onLogin={login} />
+                            <Login onLogin={login} isLogin={isLogin} setIsLogin={setIsLogin}/>
                         ) : (
-                            <Signup onSignup={signup} />
+                            <Signup onSignup={signup} isLogin={isLogin} setIsLogin={setIsLogin}/>
                         )}
-                        <button onClick={() => setIsLogin(!isLogin)}>
-                            {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
-                        </button>
+
                     </>
                 )}
             </div>

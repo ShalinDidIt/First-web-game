@@ -1,6 +1,4 @@
 .card {
-    /* width: 100px; */
-    /* height: 150px; */
     perspective: 1000px;
     cursor: pointer;
 }
@@ -37,7 +35,7 @@
 }
 
 .back {
-    background-image: url('../assets/PokemonCardBack.jpg'); /* Path to your card back image */
+    background-image: url('../assets/PokemonCardBack.jpg'); 
     background-size: cover;
     background-position: center;
     transform: rotateY(180deg);
@@ -47,15 +45,18 @@
     background-color: transparent;
     background-image: none;
     border: none;
-    pointer-events: none; /* Disable interaction with blank cards */
+    pointer-events: none;
 }
+
 .card.blank > div > div{
-    background-color: transparent; /* Make the card's background transparent */
-    border: none; /* Remove any borders */
+    background-color: transparent; 
+    border: none; 
 }
+
 .card.blank > div > .back {
-    background-image: none; /* Remove the back image for blank cards */
+    background-image: none; 
 }
+
 .card.blank > .front {
-    background-color: transparent; /* Make the front transparent for blank cards */
+    background-color: transparent; 
 }

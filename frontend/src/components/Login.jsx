@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, isLogin, setIsLogin }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -11,22 +11,24 @@ const Login = ({ onLogin }) => {
     }
 
     return (
-        <div>
+        <div className='login'>
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Username: </label>
+                    {/* <label>Username: </label> */}
                     <input
                         type="text"
+                        placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label>Password: </label>
+                    {/* <label>Password: </label> */}
                     <input
                         type="password"
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -34,6 +36,9 @@ const Login = ({ onLogin }) => {
                 </div>
                 <br/>
                 <button type="submit">Login</button>
+                <button onClick={() => setIsLogin(!isLogin)}>
+                    {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
+                </button>
             </form>
         </div>
     )

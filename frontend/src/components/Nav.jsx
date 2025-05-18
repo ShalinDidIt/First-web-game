@@ -13,6 +13,9 @@ const Nav = () => {
                 <li>
                     <Link to="/leaderboards">Leaderboard</Link>
                 </li>
+                <li>
+                    <Link to="/how-to-play">How to Play</Link>
+                </li>
             </ul>
         </nav>
     )

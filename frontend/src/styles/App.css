@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+body {
+  background: linear-gradient(0deg, black, #FFFFFF28);
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -34,5 +38,55 @@
 }
 
 .read-the-docs {
-  color: #888;
+  color: #0c26ed;
+  
+}
+
+p {
+  margin-left: 3em;
+  margin-right: 3em;
+}
+
+.login, .signup {
+  position: relative;
+  margin: 10px auto 10px auto;
+  width: 25em;
+  height: 20em;
+  background: linear-gradient(0deg, #000, #272727);
+  display: flow-root;
+}
+
+.login:before, .login:after, .signup:before, .signup:after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(45deg, #0c26ed, #000, #0c26ed, #000);
+  background-size: 400%;
+  width: 25em;
+  height: 20em;
+  z-index: -1;
+  animation: glowing-background 45s infinite;
+}
+
+
+@keyframes glowing-background {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.login:after, .signup:after {
+  filter: blur(50px);
+}
+
+input {
+  width: 20em;
+  border-radius: 10px;
 }
